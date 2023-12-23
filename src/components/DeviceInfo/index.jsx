@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Obstruction from 'obstruction';
 import * as Sentry from '@sentry/react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
 import dayjs from 'dayjs';
 
 import { withStyles, Typography, Button, CircularProgress, Popper, Tooltip } from '@material-ui/core';
@@ -114,6 +112,9 @@ const styles = (theme) => ({
   snapshotContainer: {
     borderBottom: `1px solid ${Colors.white10}`,
   },
+  snapshotContainerMobile: {
+    scrollSnapType: 'x mandatory',
+  },
   snapshotContainerLarge: {
     maxWidth: 1050,
     margin: '0 auto',
@@ -128,6 +129,7 @@ const styles = (theme) => ({
     display: 'block',
     width: '450px !important',
     maxWidth: '100%',
+    scrollSnapAlign: 'center',
   },
   snapshotImageError: {
     width: 450,
@@ -140,6 +142,7 @@ const styles = (theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    scrollSnapAlign: 'center',
     '& p': {
       textAlign: 'center',
       fontSize: '1rem',
@@ -363,16 +366,10 @@ class DeviceInfo extends Component {
                 </div>
               )
               : (
-                <Carousel
-                  autoPlay={ false }
-                  interval={ 2147483647 }
-                  showThumbs={ false }
-                  showStatus={ false }
-                  showArrows={ false }
-                >
+                <div className={classes.snapshotContainerMobile}>
                   { this.renderSnapshotImage(snapshot.result.jpegBack, false) }
                   { this.renderSnapshotImage(snapshot.result.jpegFront, true) }
-                </Carousel>
+                </div>
               )}
           </div>
           )}
